@@ -6,13 +6,15 @@
 import React, { useEffect } from "react";
 import { EditorContent } from "@tiptap/react";
 import { useEditorContext } from "@/context/EditorContext";
-import EditorMenuBar from "./EditorMenuBar";
+import EditorMenuBar from "@/components/EditorMenuBar";
+// import { EditorMenuBar } from "@/components/EditorMenuBar";
+import { EditorType } from "@/context/EditorContext";
 
-export default function EditorPage({
-  type,
-}: {
-  type: "comment" | "content" | "document";
-}) {
+interface EditorTypeProps {
+  type: EditorType;
+}
+
+export default function EditorPage({ type }: EditorTypeProps) {
   const { editor, setEditorType, charCount } = useEditorContext();
 
   useEffect(() => {
@@ -24,11 +26,9 @@ export default function EditorPage({
       <div className='text-center text-muted-foreground'>Loading editor…</div>
     );
 
-  const showMenu = type !== "comment";
-
   return (
     <div className='flex flex-col w-full max-w-3xl mx-auto mt-8 rounded-lg border shadow-sm bg-background'>
-      {showMenu && <EditorMenuBar />}
+      <EditorMenuBar />
       <div className='p-3'>
         <EditorContent
           editor={editor}

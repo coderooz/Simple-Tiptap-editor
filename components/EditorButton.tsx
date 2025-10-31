@@ -7,6 +7,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"; // optional helper if you have it
+import { MenuItem } from "@/constants/EditorMenuOptions";
 
 interface EditorButtonProps {
   isActive?: boolean;

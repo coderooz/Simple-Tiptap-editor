@@ -119,4 +119,21 @@
   body {
     @apply bg-background text-foreground;
   }
+
+   
+}
+
+@layer components {
+  /* Scope to your editor container */
+  .tiptap-content li p {
+      margin-top: 0;
+      margin-bottom: 0;
+      display: inline-block;
+      /* or display: inline-block */
+    }
+  
+    /* If using Tailwind with @apply */
+    .tiptap-content li p {
+      @apply mt-0 mb-0 leading-normal;
+    }
 }

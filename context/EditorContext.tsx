@@ -22,7 +22,7 @@ import {
   DEFAULT_EXTENSIONS,
 } from "@/constants/EditorExtension";
 
-type EditorType = "comment" | "document" | "content" | "default";
+export type EditorType = "comment" | "document" | "content" | "default";
 
 interface EditorContextType {
   charCount: number;
