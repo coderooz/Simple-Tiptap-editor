@@ -18,8 +18,9 @@ import TextAlign from "@tiptap/extension-text-align";
 import Typography from "@tiptap/extension-typography";
 import { Heading as BaseHeading } from "@tiptap/extension-heading";
 import { mergeAttributes } from "@tiptap/core";
-
-import { CharacterCount, UndoRedo } from "@tiptap/extensions";
+import Youtube from "@tiptap/extension-youtube";
+import DragHandle from "@tiptap/extension-drag-handle-react";
+import { CharacterCount, UndoRedo, Dropcursor } from "@tiptap/extensions";
 import { BulletList, ListItem, OrderedList } from "@tiptap/extension-list";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import {
@@ -39,6 +40,11 @@ import {
 } from "@tiptap/extension-text-style";
 import Image from "@tiptap/extension-image";
 import FileHandler from "@tiptap/extension-file-handler";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Blockquote from "@tiptap/extension-blockquote";
+import { all, createLowlight } from "lowlight";
+
+const lowlight = createLowlight(all);
 
 const baseAttr = {
   HTMLAttributes: {
@@ -106,9 +112,9 @@ export const DEFAULT_EXTENSIONS = [
   Bold.configure(baseAttr),
   Underline.configure(baseAttr),
   Link.configure({
-    openOnClick: false,
+    openOnClick: true,
     autolink: true,
-    defaultProtocol: "https",
+    defaultProtocol: "http",
     HTMLAttributes: {
       class: "text-blue-600 hover:underline",
     },
@@ -119,6 +125,11 @@ export const DEFAULT_EXTENSIONS = [
   }),
   UndoRedo.configure({ depth: 50, newGroupDelay: 500 }),
   Typography,
+  Blockquote.configure({
+    HTMLAttributes: {
+      class: "my-custom-class",
+    },
+  }),
 ];
 
 export const COMPLEX_EXTENSIONS = [
@@ -126,6 +137,17 @@ export const COMPLEX_EXTENSIONS = [
   Code.configure({
     HTMLAttributes: {
       class: "bg-gray-100 px-1 rounded text-sm font-mono",
+    },
+  }),
+  CodeBlockLowlight.configure({
+    lowlight,
+    exitOnTripleEnter: false,
+    languageClassPrefix: "language-",
+    enableTabIndentation: true,
+    defaultLanguage: "plaintext",
+    tabSize: 4,
+    HTMLAttributes: {
+      class: "bg-gray-500 p-2 rounded text-sm font-mono",
     },
   }),
   Highlight.configure({
@@ -202,6 +224,8 @@ export const COMPLEX_EXTENSIONS = [
     },
   }),
   Image.configure({
+    inline: true,
+    allowBase64: true,
     HTMLAttributes: {
       class: "my-4 max-w-full rounded",
     },
@@ -222,7 +246,33 @@ export const COMPLEX_EXTENSIONS = [
       });
     },
   }),
-  TableKit.configure({}),
+  TableKit.configure({
+    table: {
+      resizable: true,
+      HTMLAttributes: {
+        class: "border",
+      },
+    },
+    tableHeader: {
+      HTMLAttributes: {
+        class: "bg-gray-300",
+      },
+    },
+    tableCell: { HTMLAttributes: {} },
+    tableRow: { HTMLAttributes: {} },
+  }),
+  Youtube.configure({
+    inline: false,
+    allowFullscreen: true,
+    autoplay: true,
+    controls: false,
+    nocookie: true,
+    ccLanguage: "en",
+    ccLoadPolicy: true,
+    enableIFrameApi: true,
+    disableKBcontrols: false,
+    interfaceLanguage: "en",
+  }),
 ];
 
 export const BLOG_EXTENSIONS = [...COMPLEX_EXTENSIONS];

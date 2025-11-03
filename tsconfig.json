@@ -24,7 +24,9 @@
       "@/constants/*": ["./constants/*"],
       "@/utils/*": ["./utils/*"],
       "@/lib/*": ["./lib/*"],
-      "@/context/*": ["./context/*"]
+      "@/context/*": ["./context/*"],
+      "@/ui/*": ["./components/ui/*"],
+      "@/bubbleMenu/*" : ["./components/bubbleMenu/*"],  
     }
   },
   "include": [

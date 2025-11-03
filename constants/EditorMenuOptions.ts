@@ -3,7 +3,7 @@
  * @description Defines the configuration for the editor toolbar menu items (buttons, dropdowns, etc.)
  * used in the TipTap rich text editor. Includes menu item types, groupings, and their behaviors.
  */
-
+import React from "react";
 import { Editor } from "@tiptap/react";
 import {
   Bold,
@@ -16,6 +16,7 @@ import {
   AlignLeft,
   AlignCenter,
   AlignRight,
+  TextAlignJustify,
   Subscript,
   Superscript,
   Highlighter,
@@ -33,7 +34,15 @@ import {
   ListIndentDecrease,
   Baseline,
   PaintBucket,
+  Youtube,
+  Table,
+  TableColumnsSplit,
+  TableRowsSplit,
+  Image,
+  Link,
 } from "lucide-react";
+import YoutubeModel from "@/components/models/youtube";
+import ImageModel from "@/components/models/image";
 
 /**
  * Defines possible menu button group categories.
@@ -50,7 +59,7 @@ export type MenuBtnGroups =
 /**
  * Defines supported menu item UI types.
  */
-export type MenuItemType = "button" | "dropdown" | "input" | "custom";
+export type MenuItemType = "button" | "dropdown" | "input" | "model" | "custom";
 
 /**
  * Base interface for all menu items.
@@ -146,8 +155,19 @@ export interface MenuInput extends MenuBase {
   getValue?: (editor: Editor) => string;
 }
 
+export interface MenuModel extends MenuBase {
+  type: "model";
+  model: {
+    title: string;
+    description?: string;
+    content: (editor: Editor) => React.ReactNode | void;
+    footer?: (editor: Editor) => React.ReactNode | void;
+  };
+  isActive?: (editor: Editor) => boolean;
+}
+
 /** Union type for all supported menu item types. */
-export type MenuItem = MenuButton | MenuDropdown | MenuInput;
+export type MenuItem = MenuButton | MenuDropdown | MenuInput | MenuModel;
 
 /**
  * Main toolbar configuration for editor menu buttons.
@@ -228,7 +248,6 @@ export const COMPLEX_MENU: MenuItem[] = [
     isActive: (editor) => editor.isActive("superscript"),
     action: (editor) => editor.chain().focus().toggleSuperscript().run(),
   },
-  //Highlighter
   {
     title: "Highlighter",
     icon: Highlighter,
@@ -237,9 +256,6 @@ export const COMPLEX_MENU: MenuItem[] = [
     isActive: (editor) => editor.isActive("highlight"),
     action: (editor) => editor.chain().focus().toggleHighlight().run(),
   },
-  // =============================
-  // 🖋️ Font Family Dropdown
-  // =============================
   {
     title: "Font Family",
     type: "dropdown",
@@ -258,10 +274,6 @@ export const COMPLEX_MENU: MenuItem[] = [
     getValue: (editor) =>
       editor.getAttributes("textStyle").fontFamily || "inherit",
   },
-
-  // =============================
-  // 🔤 Font Size Dropdown
-  // =============================
   {
     title: "Font Size",
     type: "dropdown",
@@ -279,10 +291,6 @@ export const COMPLEX_MENU: MenuItem[] = [
     },
     getValue: (editor) => editor.getAttributes("textStyle").fontSize,
   },
-
-  // =============================
-  // 🧩 Headings Dropdown (H1–H6)
-  // =============================
   {
     title: "Heading",
     type: "dropdown",
@@ -398,6 +406,86 @@ export const COMPLEX_MENU: MenuItem[] = [
     },
     class: "w-10",
   },
+  {
+    title: "Youtube",
+    icon: Youtube,
+    group: "insert",
+    type: "model",
+    model: {
+      title: "Insert YouTube Video",
+      description: "Embed a YouTube video by entering its URL and size.",
+      content: (editor) => React.createElement(YoutubeModel, { editor }),
+    },
+  },
+  {
+    type: "button",
+    icon: AlignLeft,
+    title: "Align left",
+    group: "alignment",
+    isActive: (editor) => editor.isActive({ textAlign: "left" }),
+    action: (editor) => editor.chain().focus().setTextAlign("left").run(),
+  },
+  {
+    type: "button",
+    icon: AlignCenter,
+    title: "Align Center",
+    group: "alignment",
+    isActive: (editor) => editor.isActive({ textAlign: "center" }),
+    action: (editor) => editor.chain().focus().setTextAlign("center").run(),
+  },
+  {
+    type: "button",
+    icon: AlignRight,
+    title: "Align Right",
+    group: "alignment",
+    isActive: (editor) => editor.isActive({ textAlign: "right" }),
+    action: (editor) => editor.chain().focus().setTextAlign("right").run(),
+  },
+  {
+    type: "button",
+    icon: TextAlignJustify,
+    title: "Justify center",
+    group: "alignment",
+    isActive: (editor) => editor.isActive({ textAlign: "justify" }),
+    action: (editor) => editor.chain().focus().setTextAlign("justify").run(),
+  },
+  {
+    title: "Table",
+    group: "insert",
+    icon: Table,
+    type: "button",
+    // isActive(editor) {},
+    action: (editor) =>
+      editor
+        .chain()
+        .focus()
+        .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+        .run(),
+  },
+  {
+    title: "Image",
+    icon: Image,
+    type: "model",
+    group: "insert",
+    // isActive: (editor) => editor.,
+    model: {
+      title: "Image Insert",
+      description: "Add image in the document",
+      content: (editor) => React.createElement(ImageModel, { editor }),
+    },
+  },
+  {
+    title: "Link",
+    icon: Link,
+    type: "model",
+    group: "insert",
+    model: {
+      title: "Add Link",
+      content(editor) {
+          
+      },
+    }
+  }
 ];
 
 /**

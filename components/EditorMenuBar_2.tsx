@@ -14,6 +14,15 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { cn } from "@/lib/utils";
 
 export function EditorMenuBar() {
@@ -45,7 +54,7 @@ export function EditorMenuBar() {
                       size='icon'
                       variant={active ? "default" : "ghost"}
                       title={item.title}
-                      onClick={() => item.action(editor)}
+                      onClick={() => item.action?.(editor)}
                       className={cn(
                         "transition h-8 w-8",
                         active && "bg-primary/20 text-primary"
@@ -109,6 +118,39 @@ export function EditorMenuBar() {
                         title={item.title}
                       />
                     </div>
+                  );
+                }
+
+                case "model": {
+                  const Icon = item.icon;
+                  const active = item.isActive?.(editor) ?? false;
+
+                  return (
+                    <Dialog>
+                      <DialogTrigger>
+                        <Button
+                          key={item.title}
+                          size='icon'
+                          variant={active ? "default" : "ghost"}
+                          title={item.title}
+                          className={cn(
+                            "transition h-8 w-8",
+                            active && "bg-primary/20 text-primary"
+                          )}
+                        >
+                          {Icon && <Icon size={16} strokeWidth={2} />}
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <DialogHeader>
+                          <DialogTitle>{item.model.title}</DialogTitle>
+                          <DialogDescription>
+                            {item.model.description}
+                          </DialogDescription>
+                          {item.model.content(editor) ?? ""}
+                        </DialogHeader>
+                      </DialogContent>
+                    </Dialog>
                   );
                 }
                 default:

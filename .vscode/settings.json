@@ -13,6 +13,7 @@
         "**/node_modules": true,
         "**/dist": true,
         "**/.next": true,
+        "**/.vercel": true,
     },
     "files.defaultLanguage": "typescriptreact",
     "editor.tabSize": 4,
