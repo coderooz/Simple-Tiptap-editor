@@ -23,6 +23,7 @@ import DragHandle from "@tiptap/extension-drag-handle-react";
 import { CharacterCount, UndoRedo, Dropcursor } from "@tiptap/extensions";
 import { BulletList, ListItem, OrderedList } from "@tiptap/extension-list";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import { MarkdownLink } from "@/extension/MarkDownLink";
 import {
   Details,
   DetailsContent,
@@ -116,7 +117,13 @@ export const DEFAULT_EXTENSIONS = [
     autolink: true,
     defaultProtocol: "http",
     HTMLAttributes: {
-      class: "text-blue-600 hover:underline",
+      class: "text-blue-600 hover:underline hover:opacity-80",
+    },
+  }),
+  MarkdownLink.configure({
+    openOnClick: true,
+    HTMLAttributes: {
+      class: "text-blue-600 hover:underline hover:opacity-80",
     },
   }),
   TextAlign.configure({
@@ -189,7 +196,7 @@ export const COMPLEX_EXTENSIONS = [
     keepAttributes: true,
     keepMarks: true,
     HTMLAttributes: {
-      class: "list-disc list-inside mb-4 space-y-2",
+      class: "list-disc list-outside mb-4 space-y-2 pl-6",
     },
   }),
   OrderedList.configure({
@@ -197,7 +204,7 @@ export const COMPLEX_EXTENSIONS = [
     keepMarks: true,
     keepAttributes: true,
     HTMLAttributes: {
-      class: "list-decimal list-inside space-y-2",
+      class: "list-decimal list-outside mb-4 space-y-2 pl-6",
     },
   }),
   ListItem.configure({
@@ -206,16 +213,18 @@ export const COMPLEX_EXTENSIONS = [
     },
   }),
   Details.configure({
-    persist: true,
-    ...baseAttr,
     HTMLAttributes: {
-      class: "border rounded-md p-4 my-4 bg-gray-50",
+      class: "border rounded-md p-3 my-3 bg-gray-50",
     },
   }),
-  DetailsContent,
   DetailsSummary.configure({
     HTMLAttributes: {
       class: "font-semibold cursor-pointer",
+    },
+  }),
+  DetailsContent.configure({
+    HTMLAttributes: {
+      class: "text-sm mt-2",
     },
   }),
   HorizontalRule.configure({
@@ -250,16 +259,26 @@ export const COMPLEX_EXTENSIONS = [
     table: {
       resizable: true,
       HTMLAttributes: {
-        class: "border",
+        class:
+          "border border-gray-300 border-collapse table-auto w-full rounded-md overflow-hidden",
       },
     },
     tableHeader: {
       HTMLAttributes: {
-        class: "bg-gray-300",
+        class:
+          "bg-gray-200 text-left font-semibold border border-gray-300 px-2 py-1",
       },
     },
-    tableCell: { HTMLAttributes: {} },
-    tableRow: { HTMLAttributes: {} },
+    tableCell: {
+      HTMLAttributes: {
+        class: "border border-gray-300 px-2 py-1 align-top",
+      },
+    },
+    tableRow: {
+      HTMLAttributes: {
+        class: "",
+      },
+    },
   }),
   Youtube.configure({
     inline: false,

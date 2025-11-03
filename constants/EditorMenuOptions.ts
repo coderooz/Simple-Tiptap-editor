@@ -40,9 +40,13 @@ import {
   TableRowsSplit,
   Image,
   Link,
+  Download,
+  Upload,
 } from "lucide-react";
-import YoutubeModel from "@/components/models/youtube";
-import ImageModel from "@/components/models/image";
+import YoutubeModel from "@/models/youtube";
+import ImageModel from "@/models/image";
+import LinkModel from "@/models/link";
+import { Import as ImportFileModel } from "@/models/ImportExport";
 
 /**
  * Defines possible menu button group categories.
@@ -54,6 +58,8 @@ export type MenuBtnGroups =
   | "lists" // Ordered/unordered lists
   | "history" // Undo/Redo
   | "fonts" // Font size, font family, headings
+  | "file"
+  | "table"
   | "insert"; // Code blocks, links, images, etc.
 
 /**
@@ -334,7 +340,30 @@ export const COMPLEX_MENU: MenuItem[] = [
     group: "insert",
     type: "button",
     isActive: (editor) => editor.isActive("details"),
-    action: (editor) => editor.chain().focus().setDetails(),
+    action: (editor) => {
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: "details",
+          content: [
+            {
+              type: "detailsSummary",
+              content: [{ type: "text", text: "Summary..." }],
+            },
+            {
+              type: "detailsContent",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [{ type: "text", text: "Details content..." }],
+                },
+              ],
+            },
+          ],
+        })
+        .run();
+    },
   },
   {
     title: "Bullet List",
@@ -479,16 +508,116 @@ export const COMPLEX_MENU: MenuItem[] = [
     icon: Link,
     type: "model",
     group: "insert",
+    isActive: (editor) => editor.isActive("link"),
     model: {
-      title: "Add Link",
-      content(editor) {
-          
-      },
-    }
-  }
+      title: "Add / Edit Link",
+      description: "Insert or update a hyperlink in your document.",
+      content: (editor) => React.createElement(LinkModel, { editor }),
+    },
+  },
 ];
 
 /**
  * Full menu list for the editor, including additional content-related tools.
  */
 export const CONTENT_MENU: MenuItem[] = [...MENU_BTN_ITEMS, ...COMPLEX_MENU];
+export const DOCUMENT_MENU: MenuItem[] = [
+  ...MENU_BTN_ITEMS,
+  ...COMPLEX_MENU,
+  {
+    title: "Export Content",
+    icon: Download,
+    group: "file",
+    type: "button",
+    action: (editor) => {
+      const json = editor.getJSON();
+      const blob = new Blob([JSON.stringify(json, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "editor-content.json";
+      link.click();
+      URL.revokeObjectURL(url);
+    },
+  },
+
+  {
+    title: "Import Content",
+    icon: Upload,
+    group: "file",
+    type: "model",
+    model: {
+      title: "Import Content",
+      description:
+        "Upload a previously exported JSON file to restore your editor state.",
+      content: (editor) => React.createElement(ImportFileModel, { editor }),
+    },
+  },
+  {
+    title: "Insert Table",
+    group: "table",
+    icon: Table,
+    type: "button",
+    action: (editor) =>
+      editor
+        .chain()
+        .focus()
+        .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+        .run(),
+  },
+
+  {
+    title: "Add Column",
+    group: "table",
+    icon: TableColumnsSplit,
+    type: "button",
+    action: (editor) => editor.chain().focus().addColumnAfter().run(),
+  },
+
+  {
+    title: "Add Row",
+    group: "table",
+    icon: TableRowsSplit,
+    type: "button",
+    action: (editor) => editor.chain().focus().addRowAfter().run(),
+  },
+
+  {
+    title: "Delete Column",
+    group: "table",
+    icon: SquareDashedTopSolid,
+    type: "button",
+    action: (editor) => editor.chain().focus().deleteColumn().run(),
+  },
+
+  {
+    title: "Delete Row",
+    group: "table",
+    icon: SquareDashedBottom,
+    type: "button",
+    action: (editor) => editor.chain().focus().deleteRow().run(),
+  },
+
+  {
+    title: "Delete Table",
+    group: "table",
+    icon: SquareDashed,
+    type: "button",
+    action: (editor) => editor.chain().focus().deleteTable().run(),
+  },
+  {
+    title: "Toggle Table Borders",
+    icon: Square,
+    group: "table",
+    type: "button",
+    action: (editor) => {
+      const dom = document.querySelector(".ProseMirror table");
+      if (dom) {
+        dom.classList.toggle("border");
+        dom.classList.toggle("border-gray-300");
+      }
+    },
+  },
+];

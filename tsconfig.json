@@ -26,7 +26,9 @@
       "@/lib/*": ["./lib/*"],
       "@/context/*": ["./context/*"],
       "@/ui/*": ["./components/ui/*"],
-      "@/bubbleMenu/*" : ["./components/bubbleMenu/*"],  
+      "@/bubbleMenu/*" : ["./components/bubbleMenu/*"],
+      "@/models/*": ["./components/models/*"],
+      "@/extension/*": ["./components/extensions/*"]
     }
   },
   "include": [

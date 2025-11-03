@@ -27,7 +27,7 @@ export default function EditorButton({
       variant={isActive ? "secondary" : "ghost"}
       size='sm'
       className={cn(
-        "flex items-center gap-1 px-2 py-1 rounded-md transition",
+        "flex items-center gap-1 px-2 py-1 rounded-md transition cursor-pointer",
         isActive && "bg-muted"
       )}
       onClick={onClick}

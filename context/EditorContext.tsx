@@ -24,10 +24,10 @@ import {
 
 export type EditorType = "comment" | "document" | "content" | "default";
 
-import { TextBubbleMenu } from "@/bubbleMenu/TextBubbleMenu";
-import { ImageBubbleMenu } from "@/bubbleMenu/ImageBubbleMenu";
-import { TableBubbleMenu } from "@/bubbleMenu/TableBubbleMenu";
-import { YoutubeBubbleMenu } from "@/bubbleMenu/YoutubeBubbleMenu";
+// import { TextBubbleMenu } from "@/bubbleMenu/TextBubbleMenu";
+// import { ImageBubbleMenu } from "@/bubbleMenu/ImageBubbleMenu";
+// import { TableBubbleMenu } from "@/bubbleMenu/TableBubbleMenu";
+// import { YoutubeBubbleMenu } from "@/bubbleMenu/YoutubeBubbleMenu";
 
 interface EditorContextType {
   charCount: number;
@@ -108,10 +108,11 @@ export function EditorProvider({ children }: { children: ReactNode }) {
 
   return (
     <EditorContext.Provider value={value}>
-      <TextBubbleMenu editor={editor} />
+      {/* <TextBubbleMenu editor={editor} />
       <ImageBubbleMenu editor={editor} />
       <TableBubbleMenu editor={editor} />
-      <YoutubeBubbleMenu editor={editor} />
+      <YoutubeBubbleMenu editor={editor} /> */}
+      <div>Editor Type: {editorType}</div>
       {children}
     </EditorContext.Provider>
   );
