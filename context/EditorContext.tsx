@@ -89,9 +89,14 @@ export function EditorProvider({ children }: { children: ReactNode }) {
   }, [editor]);
 
   useEffect(() => {
-    if (!editor) return;
-    editor.on("transaction", updateCharCount);
-    return () => editor.off("transaction", updateCharCount);
+    if (!editor) return undefined;
+
+    const handler = updateCharCount;
+    editor.on("transaction", handler);
+
+    return () => {
+      editor.off("transaction", handler);
+    };
   }, [editor, updateCharCount]);
 
   const value = useMemo(

@@ -1,9 +1,13 @@
 /** @format */
 
 // extensions/ImageResizable.tsx
-import { NodeViewWrapper, NodeViewContent } from "@tiptap/react";
-import { Node, mergeAttributes } from "@tiptap/core";
 import React from "react";
+import {
+  NodeViewWrapper,
+  NodeViewContent,
+  ReactNodeViewRenderer,
+} from "@tiptap/react";
+import { Node, mergeAttributes } from "@tiptap/core";
 
 export const ImageResizable = Node.create({
   name: "imageResizable",
@@ -11,6 +15,7 @@ export const ImageResizable = Node.create({
   inline: false,
   draggable: true,
   selectable: true,
+
   addAttributes() {
     return {
       src: { default: null },
@@ -19,18 +24,21 @@ export const ImageResizable = Node.create({
       align: { default: "center" },
     };
   },
+
   parseHTML() {
     return [{ tag: "img" }];
   },
+
   renderHTML({ HTMLAttributes }) {
     return ["img", mergeAttributes(HTMLAttributes)];
   },
+
   addNodeView() {
     return ReactNodeViewRenderer(ImageComponent);
   },
 });
 
-const ImageComponent = ({ node, updateAttributes, selected }) => {
+const ImageComponent = ({ node, updateAttributes, selected }: any) => {
   const { src, alt, width, align } = node.attrs;
 
   return (
@@ -40,7 +48,7 @@ const ImageComponent = ({ node, updateAttributes, selected }) => {
           src={src}
           alt={alt}
           style={{ width }}
-          className={`mx-auto rounded-lg shadow-md ${
+          className={`mx-auto rounded-lg shadow-md transition-all duration-200 ${
             selected ? "ring-2 ring-blue-400" : ""
           }`}
         />
