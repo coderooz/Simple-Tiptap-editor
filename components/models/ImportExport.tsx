@@ -1,6 +1,6 @@
 /** @format */
 
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 
 export function Import({ editor }: { editor: Editor }) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

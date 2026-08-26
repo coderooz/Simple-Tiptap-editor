@@ -1,7 +1,7 @@
 /** @format */
 
 // components/editor/BubbleMenus/ImageBubbleMenu.tsx
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import {
   Trash2,
   AlignLeft,

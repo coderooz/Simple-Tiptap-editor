@@ -26,8 +26,8 @@ export const FontFamily = Extension.create({
           fontFamily: {
             default: null,
             renderHTML: (attrs) => {
-              if (!attrs.fontFamily) return {};
-              return { style: `font-family: ${attrs.fontFamily}` };
+              if (!attrs["fontFamily"]) return {};
+              return { style: `font-family: ${attrs["fontFamily"]}` };
             },
             parseHTML: (element) =>
               element.style.fontFamily.replace(/['"]/g, ""),

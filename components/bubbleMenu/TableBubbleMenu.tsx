@@ -1,7 +1,7 @@
 /** @format */
 
 // components/editor/BubbleMenus/TableBubbleMenu.tsx
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import { Plus, Minus, Trash2 } from "lucide-react";
 import { BaseBubbleMenu } from "@/bubbleMenu/BaseBubbleMenu";
 

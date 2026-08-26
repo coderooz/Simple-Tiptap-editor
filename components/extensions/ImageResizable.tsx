@@ -1,10 +1,8 @@
 /** @format */
 
 // extensions/ImageResizable.tsx
-import React from "react";
 import {
   NodeViewWrapper,
-  NodeViewContent,
   ReactNodeViewRenderer,
 } from "@tiptap/react";
 import { Node, mergeAttributes } from "@tiptap/core";
@@ -45,8 +43,8 @@ const ImageComponent = ({ node, updateAttributes, selected }: any) => {
     <NodeViewWrapper className='relative group flex justify-center my-4'>
       <div className={`w-full text-${align}`}>
         <img
-          src={src}
-          alt={alt}
+          src={src ?? ""}
+          alt={alt ?? ""}
           style={{ width }}
           className={`mx-auto rounded-lg shadow-md transition-all duration-200 ${
             selected ? "ring-2 ring-blue-400" : ""

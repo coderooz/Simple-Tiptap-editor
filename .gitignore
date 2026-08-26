@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -41,4 +42,53 @@ yarn-error.log*
 next-env.d.ts
 
 # Editor
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+logs/
+*.log
+
+# Turbo
+.turbo/
+
+# Test
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Build artifacts
+dist/
+*.tsbuildinfo
+
+# Cache
+.cache/
+.eslintcache
+.stylelintcache
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# MCP
+.mcp-runtime.json
+docs-repo.project-mcp.json
+
+# Vercel
+.vercel/output/

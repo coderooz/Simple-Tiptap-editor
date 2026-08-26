@@ -1,0 +1,378 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "model": "deepseek-v4-flash-free",
+
+  "instructions": [
+    "AGENTS.md",
+    "PROJECT_REFERENCE_INDEX.md",
+    "~/.config/opencode/GLOBAL_RULES.md",
+    "~/.config/opencode/governance/PROJECT_WORKFLOW.md"
+  ],
+
+  "permission": {
+    "glob": "allow",
+    "grep": "allow",
+    "read": "allow",
+    "edit": "allow",
+    "write": "allow",
+    "bash": "allow",
+    "webfetch": "allow",
+    "websearch": "allow",
+    "question": "allow",
+    "todowrite": "allow",
+    "skill": "allow",
+    "lsp": "allow",
+    "task": "allow"
+  },
+
+  "agent": {
+    "build": {
+      "description": "Default agent for Simple-Tiptap-editor: Next.js 16 + TipTap v3 rich text editor development",
+      "mode": "primary",
+      "temperature": 0.2,
+      "steps": 50,
+      "permission": {
+        "task": {
+          "*": "deny",
+          "explorer": "allow",
+          "doc-writer": "allow",
+          "doc-validator": "allow",
+          "doc-indexer": "allow",
+          "issue-handler": "allow",
+          "devops": "allow",
+          "deployer": "allow"
+        }
+      }
+    },
+
+    "plan": {
+      "description": "Analysis and planning mode for Simple-Tiptap-editor -- read-only exploration",
+      "mode": "primary",
+      "temperature": 0.7,
+      "steps": 30,
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "question": "allow",
+        "todowrite": "allow",
+        "lsp": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "bash": "deny"
+      }
+    },
+
+    "explorer": {
+      "description": "Fast read-only search across Simple-Tiptap-editor codebase and docs",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "steps": 20,
+      "color": "#22c55e",
+      "permission": {
+        "glob": "allow",
+        "grep": "allow",
+        "read": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "question": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "bash": "deny"
+      }
+    },
+
+    "doc-writer": {
+      "description": "Creates and updates Simple-Tiptap-editor documentation",
+      "mode": "subagent",
+      "temperature": 0.3,
+      "steps": 30,
+      "color": "#3b82f6",
+      "permission": {
+        "glob": "allow",
+        "grep": "allow",
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "question": "allow",
+        "todowrite": "allow",
+        "bash": "ask"
+      }
+    },
+
+    "doc-validator": {
+      "description": "Validates Simple-Tiptap-editor code against TipTap, Next.js, React docs",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "steps": 35,
+      "color": "#ef4444",
+      "permission": {
+        "glob": "allow",
+        "grep": "allow",
+        "read": "allow",
+        "write": "allow",
+        "webfetch": "allow",
+        "question": "allow",
+        "todowrite": "allow",
+        "edit": "deny",
+        "bash": "ask"
+      }
+    },
+
+    "doc-indexer": {
+      "description": "Maintains Simple-Tiptap-editor doc catalog and index",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "steps": 40,
+      "color": "#a855f7",
+      "permission": {
+        "glob": "allow",
+        "grep": "allow",
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "webfetch": "allow",
+        "question": "allow",
+        "todowrite": "allow",
+        "bash": "allow"
+      }
+    },
+
+    "issue-handler": {
+      "description": "Manages GitHub issues and PRs for Simple-Tiptap-editor",
+      "mode": "subagent",
+      "temperature": 0.2,
+      "steps": 30,
+      "permission": {
+        "bash": {
+          "*": "ask",
+          "gh issue *": "allow",
+          "gh pr *": "allow",
+          "gh repo *": "allow",
+          "gh api *": "allow",
+          "gh search *": "allow",
+          "gh label *": "allow",
+          "gh release *": "allow",
+          "git *": "allow"
+        },
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "webfetch": "allow",
+        "question": "allow",
+        "todowrite": "allow"
+      }
+    },
+
+    "devops": {
+      "description": "DevOps for Simple-Tiptap-editor: Vercel deploy, CI/CD, env vars",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "steps": 50,
+      "color": "#000000",
+      "permission": {
+        "bash": {
+          "vercel *": "allow",
+          "gh *": "allow",
+          "git *": "allow",
+          "npm run build": "allow",
+          "npm run lint": "allow",
+          "npm run typecheck": "allow",
+          "*": "ask"
+        },
+        "task": {
+          "*": "allow",
+          "deployer": "allow"
+        }
+      }
+    },
+
+    "deployer": {
+      "description": "Vercel deploy agent for Simple-Tiptap-editor",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "steps": 20,
+      "color": "#6366f1",
+      "permission": {
+        "bash": {
+          "vercel *": "allow",
+          "*": "deny"
+        },
+        "edit": "deny",
+        "write": "deny",
+        "glob": "allow",
+        "read": "allow"
+      }
+    },
+
+    "tiptap-expert": {
+      "description": "TipTap v3 expert for editor extensions, bubble menus, custom nodes",
+      "mode": "subagent",
+      "temperature": 0.2,
+      "steps": 40,
+      "color": "#f97316",
+      "permission": {
+        "glob": "allow",
+        "grep": "allow",
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "question": "allow",
+        "todowrite": "allow",
+        "bash": "ask"
+      }
+    },
+
+    "nextjs-expert": {
+      "description": "Next.js 16 App Router expert for routing, server components, middleware",
+      "mode": "subagent",
+      "temperature": 0.2,
+      "steps": 40,
+      "color": "#000000",
+      "permission": {
+        "glob": "allow",
+        "grep": "allow",
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "question": "allow",
+        "todowrite": "allow",
+        "bash": "ask"
+      }
+    }
+  },
+
+  "mcp": {
+    "local-mcp-memory": {
+      "type": "local",
+      "command": [
+        "node",
+        "C:\\Code_Works\\HTML_CSS_JS\\workProjects\\website\\local-mcp-memory\\mcp-server.js"
+      ],
+      "environment": {
+        "MCP_PROJECT": "simple-tiptap-editor",
+        "MCP_SCOPE": "project"
+      },
+      "enabled": true,
+      "timeout": 30000
+    }
+  },
+
+  "command": {
+    "dev": {
+      "description": "Start development server",
+      "template": "npm run dev",
+      "agent": "build"
+    },
+    "build": {
+      "description": "Build for production",
+      "template": "npm run build",
+      "agent": "build"
+    },
+    "lint": {
+      "description": "Run ESLint",
+      "template": "npm run lint",
+      "agent": "build"
+    },
+    "typecheck": {
+      "description": "Run TypeScript type checking",
+      "template": "npx tsc --noEmit",
+      "agent": "build"
+    },
+    "test": {
+      "description": "Run tests (when configured)",
+      "template": "npm test --if-present",
+      "agent": "build"
+    },
+    "deploy-preview": {
+      "description": "Deploy to Vercel preview",
+      "template": "Deploy the project to Vercel preview. Use the deployer agent.",
+      "agent": "devops"
+    },
+    "deploy-prod": {
+      "description": "Deploy to Vercel production",
+      "template": "Deploy the project to Vercel production. Use the deployer agent.",
+      "agent": "devops"
+    },
+    "add-extension": {
+      "description": "Add a new TipTap extension",
+      "template": "Add a new TipTap extension to the editor. Follow the patterns in components/extensions/ and constants/EditorExtension.tsx. Update EditorMenuOptions.ts if a toolbar button is needed. Test all 4 editor modes.",
+      "agent": "tiptap-expert"
+    },
+    "add-editor-mode": {
+      "description": "Add a new editor mode",
+      "template": "Add a new editor mode. Update EditorType in context/EditorContext.tsx, create extension array in constants/EditorExtension.tsx, add case to extensions map, create page in app/<mode>/page.tsx.",
+      "agent": "tiptap-expert"
+    },
+    "fix-bubble-menu": {
+      "description": "Fix bubble menu issues",
+      "template": "Debug and fix bubble menu issues in components/bubbleMenu/. Check BaseBubbleMenu.tsx and specific menus (Text, Image, Table, YouTube).",
+      "agent": "tiptap-expert"
+    }
+  },
+
+  "skills": {
+    "frontend-engineer": { "description": "Build responsive, accessible, and performant user interfaces", "enabled": true },
+    "web-development-engineer": { "description": "Build modern web applications using Next.js, React, TypeScript", "enabled": true },
+    "fullstack-engineer": { "description": "Build end-to-end applications with frontend, backend, database, and authentication", "enabled": true },
+    "accessibility-engineer": { "description": "Implement WCAG compliance, screen reader support, and keyboard navigation", "enabled": true },
+    "performance-engineer": { "description": "Optimize frontend, backend, and infrastructure performance", "enabled": true },
+    "test-automation-engineer": { "description": "Automate testing with Playwright, Vitest, Jest, and Pytest", "enabled": true },
+    "devops-engineer": { "description": "Automate CI/CD, deployments, infrastructure, and monitoring", "enabled": true },
+    "git-engineer": { "description": "Manage Git workflows, branching strategies, and GitHub operations", "enabled": true },
+    "technical-writer": { "description": "Create documentation, API docs, architecture decision records, and guides", "enabled": true },
+    "ui-designer": { "description": "Create design systems, component libraries, and visual hierarchies", "enabled": true },
+    "ux-designer": { "description": "Design user journeys, information architecture, and usability analysis", "enabled": true }
+  },
+
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 10000
+  },
+
+  "formatter": {
+    "prettier": {
+      "extensions": [".md", ".json", ".yaml", ".yml", ".ts", ".tsx"]
+    }
+  },
+
+  "lsp": {
+    "typescript": {
+      "command": ["typescript-language-server", "--stdio"],
+      "extensions": [".ts", ".tsx", ".js", ".jsx"]
+    },
+    "json": {
+      "command": ["vscode-json-languageserver", "--stdio"],
+      "extensions": [".json", ".jsonc"]
+    },
+    "css": {
+      "command": ["vscode-css-languageserver", "--stdio"],
+      "extensions": [".css", ".scss", ".less"]
+    }
+  },
+
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "dist/**",
+      "build/**",
+      "coverage/**",
+      ".turbo/**",
+      ".vercel/**",
+      "*.log"
+    ]
+  },
+
+  "shell": "powershell"
+}

@@ -3,7 +3,7 @@
  */
 
 import { Link } from "@tiptap/extension-link";
-import { InputRule, textblockTypeInputRule } from "@tiptap/core";
+import { InputRule } from "@tiptap/core";
 
 const MARKDOWN_LINK_REGEX = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/;
 
@@ -12,7 +12,7 @@ export const MarkdownLink = Link.extend({
     return [
       new InputRule({
         find: MARKDOWN_LINK_REGEX,
-        handler: ({ state, range, match, chain }) => {
+        handler: ({ range, match, chain }) => {
           const [, text, href] = match;
 
           // Replace [text](href) with text linked

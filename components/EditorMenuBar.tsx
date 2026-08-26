@@ -2,7 +2,7 @@
  * @/components/editor/EditorMenuBar.tsx
  */
 
-import React, { useMemo } from "react";
+import React from "react";
 import { useEditorContext } from "@/context/EditorContext";
 import {
   MENU_BTN_ITEMS,

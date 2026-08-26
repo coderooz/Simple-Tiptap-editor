@@ -1,0 +1,38 @@
+# CODEOWNERS
+# These users will be requested for review when someone opens a pull request.
+
+# Global owners
+* @coderooz
+
+# Documentation
+/docs/ @coderooz
+README.md @coderooz
+CHANGELOG.md @coderooz
+CONTRIBUTING.md @coderooz
+CODE_OF_CONDUCT.md @coderooz
+SECURITY.md @coderooz
+LICENSE @coderooz
+
+# Configuration
+package.json @coderooz
+tsconfig.json @coderooz
+next.config.ts @coderooz
+.eslintrc.json @coderooz
+.prettierrc @coderooz
+.editorconfig @coderooz
+.gitignore @coderooz
+vercel.json @coderooz
+
+# GitHub
+.github/ @coderooz
+
+# Source code
+app/ @coderooz
+components/ @coderooz
+constants/ @coderooz
+context/ @coderooz
+lib/ @coderooz
+public/ @coderooz
+
+# CI/CD
+.github/workflows/ @coderooz

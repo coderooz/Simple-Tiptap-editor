@@ -3,11 +3,11 @@
  */
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { EditorContent } from "@tiptap/react";
 import { useEditorContext } from "@/context/EditorContext";
 import { EditorMenuBar } from "@/components/EditorMenuBar";
-import { EditorType } from "@/context/EditorContext";
+import type { EditorType } from "@/context/EditorContext";
 
 interface EditorTypeProps {
   type: EditorType;

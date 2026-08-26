@@ -4,7 +4,7 @@
  * used in the TipTap rich text editor. Includes menu item types, groupings, and their behaviors.
  */
 import React from "react";
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import {
   Bold,
   Italic,
@@ -278,7 +278,7 @@ export const COMPLEX_MENU: MenuItem[] = [
       editor.chain().focus().setFontFamily(value.toString()).run();
     },
     getValue: (editor) =>
-      editor.getAttributes("textStyle").fontFamily || "inherit",
+      (editor.getAttributes("textStyle") as Record<string, unknown>)["fontFamily"] as string || "inherit",
   },
   {
     title: "Font Size",
@@ -295,7 +295,7 @@ export const COMPLEX_MENU: MenuItem[] = [
     onSelect: (editor, value) => {
       editor.chain().focus().setFontSize(value.toString()).run();
     },
-    getValue: (editor) => editor.getAttributes("textStyle").fontSize,
+    getValue: (editor) => (editor.getAttributes("textStyle") as Record<string, unknown>)["fontSize"] as string,
   },
   {
     title: "Heading",
@@ -322,8 +322,8 @@ export const COMPLEX_MENU: MenuItem[] = [
       }
     },
     getValue: (editor) => {
-      const level = editor.getAttributes("heading").level;
-      return level ? level.toString() : null;
+      const level = (editor.getAttributes("heading") as Record<string, unknown>)["level"] as number;
+      return level ? level.toString() : "";
     },
   },
   {
@@ -413,7 +413,7 @@ export const COMPLEX_MENU: MenuItem[] = [
         .run();
     },
     getValue(editor) {
-      return editor.getAttributes("textStyle").color || "#000000";
+      return (editor.getAttributes("textStyle") as Record<string, unknown>)["color"] as string || "#000000";
     },
     class: "w-10",
   },
@@ -431,7 +431,7 @@ export const COMPLEX_MENU: MenuItem[] = [
         .run();
     },
     getValue(editor) {
-      return editor.getAttributes("textStyle").backgroundColor || "#ffffff";
+      return (editor.getAttributes("textStyle") as Record<string, unknown>)["backgroundColor"] as string || "#ffffff";
     },
     class: "w-10",
   },
@@ -612,7 +612,7 @@ export const DOCUMENT_MENU: MenuItem[] = [
     icon: Square,
     group: "table",
     type: "button",
-    action: (editor) => {
+    action: (_editor) => {
       const dom = document.querySelector(".ProseMirror table");
       if (dom) {
         dom.classList.toggle("border");

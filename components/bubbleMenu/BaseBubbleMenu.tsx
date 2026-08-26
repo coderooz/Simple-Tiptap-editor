@@ -3,7 +3,7 @@
 "use client";
 
 import React from "react";
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 
 interface BaseBubbleMenuProps {

@@ -4,7 +4,7 @@
 
 "use client";
 
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
@@ -13,7 +13,8 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
-import { useEditor, Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
+import { useEditor } from "@tiptap/react";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import {
   BLOG_EXTENSIONS,

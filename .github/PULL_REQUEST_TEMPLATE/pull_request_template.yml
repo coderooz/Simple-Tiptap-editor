@@ -1,0 +1,110 @@
+name: Pull Request Template
+description: Template for pull requests
+title: "[PR] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing! Please fill out the following information.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please ensure all items are checked before submitting
+      options:
+        - label: I have read the CONTRIBUTING.md guide
+          required: true
+        - label: My code follows the project's code style
+          required: true
+        - label: I have run `npm run lint` and it passes
+          required: true
+        - label: I have run `npx tsc --noEmit` and it passes
+          required: true
+        - label: I have run `npm run build` and it passes
+          required: true
+        - label: I have added tests for my changes (if applicable)
+          required: false
+        - label: I have updated documentation (if applicable)
+          required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what this PR does.
+      placeholder: Describe your changes...
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation & Context
+      description: Why is this change required? What problem does it solve?
+      placeholder: Fixes # (issue number)
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of Change
+      description: What type of change does this PR introduce?
+      options:
+        - feat: New feature
+        - fix: Bug fix
+        - refactor: Code refactoring
+        - chore: Maintenance/chores
+        - docs: Documentation update
+        - test: Adding tests
+        - style: Code style changes
+        - perf: Performance improvement
+    validations:
+      required: true
+  - type: dropdown
+    id: editor-mode
+    attributes:
+      label: Editor Mode Affected
+      description: Which editor mode(s) does this change affect?
+      options:
+        - comment
+        - document
+        - content
+        - default
+        - All modes
+        - None (infrastructure)
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing
+      description: How did you test your changes?
+      placeholder: |
+        - Tested in development mode
+        - Tested all editor modes
+        - Verified bubble menus work
+        - Verified import/export functionality
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots/Videos
+      description: If applicable, add screenshots or videos to demonstrate the changes.
+      placeholder: Drag and drop screenshots here...
+    validations:
+      required: false
+  - type: textarea
+    id: breaking-changes
+    attributes:
+      label: Breaking Changes
+      description: Does this PR introduce any breaking changes? If yes, please describe.
+      placeholder: No breaking changes / Yes, this changes...
+    validations:
+      required: false
+  - type: textarea
+    id: additional-notes
+    attributes:
+      label: Additional Notes
+      description: Any additional information, configuration, or data that might be necessary to reproduce the issue.
+      placeholder: Any additional notes...
+    validations:
+      required: false

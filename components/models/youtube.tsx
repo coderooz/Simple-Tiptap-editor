@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 
 export interface YoutubeModelProps {
   editor: Editor;

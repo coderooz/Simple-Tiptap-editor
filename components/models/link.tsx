@@ -1,11 +1,11 @@
 
 import React from 'react';
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 
 export default function Link({ editor }: { editor: Editor }) {
   {
-    const existing = editor.getAttributes("link");
-    const [url, setUrl] = React.useState(existing?.href || "");
+    const existing = editor.getAttributes("link") as Record<string, unknown>;
+    const [url, setUrl] = React.useState((existing["href"] as string) || "");
     const [text, setText] = React.useState(
       editor.state.doc.textBetween(
         editor.state.selection.from,
@@ -14,7 +14,7 @@ export default function Link({ editor }: { editor: Editor }) {
       )
     );
     const [newTab, setNewTab] = React.useState(
-      existing?.target === "_blank" || false
+      existing["target"] === "_blank" || false
     );
 
     const applyLink = () => {

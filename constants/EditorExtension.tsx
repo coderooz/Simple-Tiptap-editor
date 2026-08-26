@@ -19,11 +19,10 @@ import Typography from "@tiptap/extension-typography";
 import { Heading as BaseHeading } from "@tiptap/extension-heading";
 import { mergeAttributes } from "@tiptap/core";
 import Youtube from "@tiptap/extension-youtube";
-import DragHandle from "@tiptap/extension-drag-handle-react";
-import { CharacterCount, UndoRedo, Dropcursor } from "@tiptap/extensions";
+import { CharacterCount, UndoRedo } from "@tiptap/extensions";
 import { BulletList, ListItem, OrderedList } from "@tiptap/extension-list";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
-import { MarkdownLink } from "@/extension/MarkDownLink";
+import { MarkdownLink } from "@/extensions/MarkDownLink";
 import {
   Details,
   DetailsContent,
@@ -53,7 +52,7 @@ const baseAttr = {
   },
 };
 
-async function fileUploader(file: File, currentEditor: any, pos: number) {
+async function fileUploader(file: File, currentEditor: { chain: () => { focus: () => any; run: () => any; insertContentAt: (pos: number, content: any) => any } }, pos: number) {
   const fileReader = new FileReader();
   fileReader.readAsDataURL(file);
   fileReader.onload = () => {
@@ -87,13 +86,13 @@ const Heading = BaseHeading.extend({
       } as Record<number, string>,
     };
   },
-  renderHTML({ node, HTMLAttributes }) {
+  renderHTML({ node, HTMLAttributes }: { node: { attrs: { level: number } }; HTMLAttributes: Record<string, unknown> }) {
     const level = node.attrs.level;
-    const { levelClassMap } = this.options as any;
-    const levelClass = levelClassMap[level] || "";
+    const options = this.options as unknown as { levelClassMap: Record<number, string>; HTMLAttributes: Record<string, unknown> };
+    const levelClass = options.levelClassMap[level] || "";
     return [
       `h${level}`,
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+      mergeAttributes(options.HTMLAttributes, HTMLAttributes, {
         class: levelClass,
       }),
       0,
@@ -241,18 +240,19 @@ export const COMPLEX_EXTENSIONS = [
   }),
   FileHandler.configure({
     allowedMimeTypes: ["image/png", "image/jpeg", "image/gif", "image/webp"],
-    onDrop: (currentEditor, files, pos) => {
+    onDrop: (editor: { chain: () => { focus: () => any; run: () => any; insertContentAt: (pos: number, content: any) => any } }, files: File[], pos: number) => {
       files.forEach((file) => {
-        fileUploader(file, currentEditor, pos);
+        fileUploader(file, editor, pos);
       });
     },
-    onPaste: (currentEditor, files, htmlContent) => {
+    onPaste: (editor: { chain: () => { focus: () => any; run: () => any; insertContentAt: (pos: number, content: any) => any }; state: { selection: { anchor: number } } }, files: File[], htmlContent?: string) => {
+      if (htmlContent) {
+        return false;
+      }
       files.forEach((file) => {
-        if (htmlContent) {
-          return false;
-        }
-        fileUploader(file, currentEditor, currentEditor.state.selection.anchor);
+        fileUploader(file, editor, editor.state.selection.anchor);
       });
+      return true;
     },
   }),
   TableKit.configure({

@@ -26,10 +26,20 @@
       "@/lib/*": ["./lib/*"],
       "@/context/*": ["./context/*"],
       "@/ui/*": ["./components/ui/*"],
-      "@/bubbleMenu/*" : ["./components/bubbleMenu/*"],
+      "@/bubbleMenu/*": ["./components/bubbleMenu/*"],
       "@/models/*": ["./components/models/*"],
-      "@/extension/*": ["./components/extensions/*"]
-    }
+      "@/extensions/*": ["./components/extensions/*"]
+    },
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true
   },
   "include": [
     "next-env.d.ts",
@@ -39,5 +49,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", ".next", "out", "dist", "build"]
 }

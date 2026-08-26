@@ -1,7 +1,7 @@
 /** @format */
 
 // components/editor/BubbleMenus/YoutubeBubbleMenu.tsx
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import { Trash2, Maximize2, Minimize2 } from "lucide-react";
 import { BaseBubbleMenu } from "@/bubbleMenu/BaseBubbleMenu";
 

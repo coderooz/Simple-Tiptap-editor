@@ -1,7 +1,7 @@
 /** @format */
 
 // components/editor/bubbleMenus/TextBubbleMenu.tsx
-import { Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 import { Bold, Italic, Underline, Link2 } from "lucide-react";
 import { BaseBubbleMenu } from "@/bubbleMenu/BaseBubbleMenu";
 
