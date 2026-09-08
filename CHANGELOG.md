@@ -5,19 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2026-08-28
 
 ### Added
-- Professional repository configuration
-- GitHub Actions CI/CD pipeline
-- Issue and PR templates
-- Contributing guidelines
-- Code of Conduct
-- Security policy
-- License (MIT)
+- **Project renamed** from `simple-tiptap-editor` to `tiptap-editor` (TipTap-Editor)
+- Professional repository configuration with GitHub Actions CI/CD pipeline
+- GitHub Issues, PR templates, and milestone tracking
+- Contributing guidelines, Code of Conduct, Security policy
+- MIT License
+- Comprehensive PROJECT_REFERENCE_INDEX.md (PRI) for AI reference
+- AGENTS.md with project-specific AI agent instructions
+- Feature registry (SSOT) at `constants/tiptap-feature-registry.ts`
+- Professional README with complete documentation
+- DEVELOPMENT_NOTES.md for development context
 
 ### Changed
-- Updated project documentation
+- **Project name**: `simple-tiptap-editor` → `tiptap-editor` (TipTap-Editor)
+- **Version**: 0.1.0 → 1.0.0 (production-ready release)
+- **Repository**: `coderooz/Simple-Tiptap-editor` → `coderooz/TipTap-Editor`
+- **Deployment URL**: `simple-tiptap-editor.vercel.app` → `tiptap-editor.vercel.app`
+- **Package name**: `simple-tiptap-editor` → `tiptap-editor`
+- Updated all documentation references to new project name
+- Updated package.json with professional metadata, keywords, and repository info
+- Updated PROJECT_REFERENCE_INDEX.md (PRI) with new project identity
+- Updated AGENTS.md with new project name and references
+
+### Fixed
+- TypeScript strict mode compliance across codebase
+- ESLint warnings resolved (unused imports, explicit any types)
+- Build configuration optimized for production
 
 ## [0.1.0] - 2025-10-30
 

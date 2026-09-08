@@ -1,8 +1,8 @@
 {
-  "name": "simple-tiptap-editor",
-  "version": "0.1.0",
+  "name": "tiptap-editor",
+  "version": "1.0.0",
   "private": true,
-  "description": "A modern, extensible rich-text editor built with Next.js 16, TypeScript, and TipTap v3",
+  "description": "A professional, production-ready TipTap rich-text editor showcase and reference implementation. Built with Next.js 16, React 19, TypeScript, and TipTap v3. Features 4 editor modes, 40+ toolbar actions, bubble menus, custom extensions, and comprehensive documentation for reusable integration.",
   "keywords": [
     "tiptap",
     "rich-text-editor",
@@ -10,17 +10,20 @@
     "react",
     "typescript",
     "wysiwyg",
-    "editor"
+    "editor",
+    "showcase",
+    "reference-implementation",
+    "tipTap-v3"
   ],
   "author": "Ranit Saha (Coderooz) <contact@coderooz.in>",
   "license": "MIT",
-  "homepage": "https://simple-tiptap-editor.vercel.app",
+  "homepage": "https://tiptap-editor.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/coderooz/Simple-Tiptap-editor.git"
+    "url": "https://github.com/coderooz/TipTap-Editor.git"
   },
   "bugs": {
-    "url": "https://github.com/coderooz/Simple-Tiptap-editor/issues"
+    "url": "https://github.com/coderooz/TipTap-Editor/issues"
   },
   "scripts": {
     "dev": "next dev",

@@ -1,4 +1,4 @@
-# AGENTS.md — Simple-Tiptap-editor
+# AGENTS.md — TipTap-Editor
 
 > Project-specific instructions for AI agents working on this repository.
 
@@ -6,11 +6,11 @@
 
 ## Project Identity
 
-- **Name:** Simple-Tiptap-editor
-- **Type:** Next.js 16 + TipTap v3 Rich Text Editor
+- **Name:** TipTap-Editor
+- **Type:** Next.js 16 + TipTap v3 Rich Text Editor Showcase & Reference Implementation
 - **Author:** Ranit Saha (Coderooz)
-- **Repository:** https://github.com/coderooz/Simple-Tiptap-editor
-- **Deployment:** https://simple-tiptap-editor.vercel.app
+- **Repository:** https://github.com/coderooz/TipTap-Editor
+- **Deployment:** https://tiptap-editor.vercel.app
 
 ---
 
@@ -52,32 +52,45 @@ npx tsc --noEmit
 ## Project Structure
 
 ```
-├── app/                    # Next.js App Router pages
-│   ├── comment/           # Comment editor mode
-│   ├── content/           # Content/blog editor mode
-│   ├── docs/              # Documentation editor mode
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Landing page
+├── app/                          # Next.js App Router pages
+│   ├── page.tsx                  # Landing page with live demo
+│   ├── demo/page.tsx             # Full playground
+│   ├── features/                 # Feature explorer & detail pages
+│   ├── comment/page.tsx          # Comment editor mode
+│   ├── content/page.tsx          # Content/blog editor mode
+│   ├── docs/page.tsx             # Documentation editor mode
+│   ├── layout.tsx                # Root layout + providers
+│   └── globals.css               # Tailwind v4 + CSS variables
 ├── components/
-│   ├── bubbleMenu/        # Context-aware bubble menus
-│   ├── extensions/        # Custom TipTap extensions
-│   ├── models/            # Modal dialogs (image, link, youtube, import/export)
-│   ├── ui/                # shadcn/ui components
-│   ├── EditorButton.tsx   # Toolbar button component
-│   ├── EditorMenuBar.tsx  # Dynamic toolbar
-│   ├── EditorPage.tsx     # Main editor component
-│   ├── MenuButton.tsx     # Menu button wrapper
-│   └── MenuSelect.tsx     # Dropdown select component
+│   ├── editor/                   # Core editor components
+│   ├── toolbar/                  # Toolbar system + registry
+│   ├── bubble-menus/             # Bubble menus + registry
+│   ├── dialogs/                  # Modal dialogs
+│   ├── commands/                 # Command layer + registry
+│   ├── showcase/                 # Showcase UI components
+│   ├── ui/                       # shadcn/ui components
+│   ├── LiveEditorDemo.tsx        # Landing page demo
+│   └── ThemeToggle.tsx           # Dark/light toggle
 ├── constants/
-│   ├── EditorExtension.tsx    # TipTap extension configurations
-│   ├── EditorMenuOptions.ts   # Toolbar button definitions
-│   └── EditorStateOptions.tsx # Editor state types
+│   ├── tiptap-feature-registry.ts # Feature registry (SSOT)
+│   ├── EditorMenuOptions.ts      # Toolbar definitions
+│   └── EditorStateOptions.ts     # Type definitions
 ├── context/
-│   └── EditorContext.tsx  # Global editor state (Provider + Hook)
+│   └── EditorContext.tsx         # Global editor state (Provider + Hook)
+├── editor/
+│   ├── core/                     # Editor factory + config
+│   ├── extensions/               # Feature-based extensions
+│   ├── commands/                 # Command layer
+│   ├── state/                    # State management
+│   ├── serializers/              # HTML/JSON/Markdown
+│   └── types/                    # Type definitions
+├── features/                     # Feature-centric implementations
+├── examples/                     # Minimal integration examples
+├── docs/                         # Documentation
+├── tests/                        # Test suite
 ├── lib/
-│   └── utils.ts           # Utility functions (cn)
-└── public/                # Static assets
+│   └── utils.ts                  # Utility functions (cn)
+└── public/                       # Static assets
 ```
 
 ---
@@ -85,6 +98,7 @@ npx tsc --noEmit
 ## Editor Architecture
 
 ### Editor Modes (4 types)
+
 | Mode | Use Case | Extensions |
 |------|----------|------------|
 | `comment` | Minimal comments | `COMMENT_EXTENSIONS` |
@@ -95,10 +109,11 @@ npx tsc --noEmit
 ### Key Components
 
 1. **EditorContext.tsx** — Global state provider with `useEditorContext()` hook
-2. **EditorPage.tsx** — Main editor rendering component
-3. **EditorMenuBar.tsx** — Dynamic toolbar from `EditorMenuOptions.ts`
-4. **Bubble Menus** — Context menus for text, images, tables, YouTube
+2. **components/editor/EditorCore.tsx** — Minimal editor wrapper
+3. **components/toolbar/Toolbar.tsx** — Dynamic toolbar from registry
+4. **components/bubble-menus/BubbleMenuRegistry.tsx** — Bubble menu registry
 5. **Custom Extensions** — ImageResizable, FontFamily, FontSize, MarkDownLink
+6. **Feature Registry** — `constants/tiptap-feature-registry.ts` (SSOT)
 
 ---
 
@@ -123,7 +138,7 @@ npx tsc --noEmit
 - Use `clsx` + `tailwind-merge` via `lib/utils.ts`
 
 ### File Naming
-- Components: PascalCase (`EditorPage.tsx`)
+- Components: PascalCase (`EditorCore.tsx`)
 - Utilities: camelCase (`utils.ts`)
 - Constants: PascalCase (`EditorExtension.tsx`)
 - Types: PascalCase with `Type` suffix (`EditorType`)
@@ -144,20 +159,20 @@ npx tsc --noEmit
 Before committing/pushing:
 1. `npm run lint` — passes
 2. `npx tsc --noEmit` — passes
-2. `npm run build` — passes
-3. No console.log in production code
-4. No commented-out code blocks
+3. `npm run build` — passes
+4. No console.log in production code
+5. No commented-out code blocks
 
 ---
 
 ## Agent Instructions
 
 ### When Adding Features
-1. Check existing patterns in `components/`, `constants/`, `context/`
+1. Check existing patterns in `components/`, `constants/`, `context/`, `editor/`
 2. Follow shadcn/ui component patterns for new UI
-3. Add new extensions to `constants/EditorExtension.tsx`
-4. Add new toolbar items to `constants/EditorMenuOptions.ts`
-5. Update types in `constants/EditorStateOptions.tsx` if needed
+3. Add new extensions to `editor/extensions/` and register in feature registry
+4. Add new toolbar items via toolbar registry
+5. Update feature registry (`constants/tiptap-feature-registry.ts`)
 
 ### When Fixing Bugs
 1. Reproduce locally first
@@ -170,35 +185,39 @@ Before committing/pushing:
 2. Update all 4 editor modes if changing extensions
 3. Test bubble menus for affected nodes
 4. Verify import/export functionality
+5. Update feature registry and documentation
 
 ---
 
 ## Common Tasks
 
 ### Add New Toolbar Button
-1. Add icon import to `EditorMenuOptions.ts`
-2. Add button config to appropriate group
-3. Define `isActive` and `action` functions
+1. Add feature to toolbar registry (`components/toolbar/registry.ts`)
+2. Define `isActive` and `action` functions
+3. Register in feature registry
 
 ### Add New TipTap Extension
-1. Create extension in `components/extensions/`
-2. Export from `constants/EditorExtension.tsx`
-3. Add to relevant extension arrays
+1. Create extension in `editor/extensions/{category}/`
+2. Export from `editor/extensions/index.ts`
+3. Add to `createEditorExtensions` factory
+4. Register in feature registry
 
 ### Add New Editor Mode
 1. Add mode to `EditorType` in `EditorContext.tsx`
-2. Create extension array in `EditorExtension.tsx`
+2. Create extension preset in `editor/core/extensions.ts`
 3. Add case to extensions map in `EditorContext.tsx`
 4. Create page in `app/<mode>/page.tsx`
+5. Register in feature registry
 
 ---
 
-## Testing Strategy (Future)
+## Testing Strategy
 
 - Unit: Vitest for utilities and hooks
 - Integration: Playwright for editor flows
 - Visual: Chromatic for UI components
 - E2E: Playwright for critical user journeys
+- Accessibility: axe-core for WCAG compliance
 
 ---
 
@@ -208,6 +227,7 @@ Before committing/pushing:
 - **Trigger:** Push to `main`
 - **Preview:** Automatic for PRs
 - **Environment:** Production on `main`, Preview on PRs
+- **Project:** `coderooz-projects/tiptap-editor`
 
 ---
 
@@ -215,8 +235,9 @@ Before committing/pushing:
 
 - No secrets in code
 - Validate all user inputs
-- Sanitize HTML output from editor
+- Sanitize HTML output from editor (DOMPurify recommended)
 - Rate limit API routes (when added)
+- CSP headers via `next.config.ts`
 
 ---
 
@@ -226,7 +247,7 @@ Before committing/pushing:
 - ARIA labels on interactive elements
 - Keyboard navigation support
 - Focus management in modals
-- Color contrast compliance
+- Color contrast compliance (WCAG 2.1 AA)
 
 ---
 
@@ -236,6 +257,7 @@ Before committing/pushing:
 - `immediatelyRender: false` in TipTap
 - Memoize editor extensions
 - Optimize images with `next/image`
+- Bundle analysis via `@next/bundle-analyzer`
 
 ---
 
@@ -245,3 +267,6 @@ Before committing/pushing:
 - [Next.js Documentation](https://nextjs.org/docs)
 - [shadcn/ui Documentation](https://ui.shadcn.com/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [PROJECT_REFERENCE_INDEX.md](./PROJECT_REFERENCE_INDEX.md)
+- [DEVELOPMENT_NOTES.md](./DEVELOPMENT_NOTES.md)
+- [CHANGELOG.md](./CHANGELOG.md)

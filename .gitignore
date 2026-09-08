@@ -92,3 +92,4 @@ docs-repo.project-mcp.json
 
 # Vercel
 .vercel/output/
+.vercel

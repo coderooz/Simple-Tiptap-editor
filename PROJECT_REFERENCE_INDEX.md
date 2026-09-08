@@ -1,16 +1,16 @@
 # Project Reference Index (PRI)
 
-**Project:** Simple-Tiptap-editor
-**Version:** 0.1.0
-**Last Updated:** 2026-08-26
-**Repository:** https://github.com/coderooz/Simple-Tiptap-editor
-**Deployment:** https://simple-tiptap-editor.vercel.app
+**Project:** TipTap-Editor
+**Version:** 1.0.0
+**Last Updated:** 2026-08-28
+**Repository:** https://github.com/coderooz/TipTap-Editor
+**Deployment:** https://tiptap-editor.vercel.app
 
 ---
 
 ## Project Overview
 
-A modern, extensible rich-text editor built with Next.js 16, TypeScript, and TipTap v3 — featuring a modular menu bar, bubble menus, image resizing, YouTube embeds, table tools, and customizable extensions for documents, blog content, and comments.
+A professional, production-ready TipTap rich-text editor showcase and reference implementation. Built with Next.js 16, React 19, TypeScript, and TipTap v3. Features 4 editor modes, 40+ toolbar actions, bubble menus, custom extensions, and comprehensive documentation for reusable integration.
 
 ---
 
@@ -33,7 +33,7 @@ A modern, extensible rich-text editor built with Next.js 16, TypeScript, and Tip
 ## Project Structure
 
 ```
-Simple-Tiptap-editor/
+TipTap-Editor/
 ├── .github/
 │   ├── workflows/
 │   ├── ISSUE_TEMPLATE/
@@ -41,75 +41,50 @@ Simple-Tiptap-editor/
 ├── .vscode/
 │   └── settings.json
 ├── app/
-│   ├── comment/page.tsx
-│   ├── content/page.tsx
-│   ├── docs/page.tsx
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
+│   ├── page.tsx                      # Landing page with live demo
+│   ├── demo/page.tsx                 # Full playground
+│   ├── features/                     # Feature explorer & detail pages
+│   ├── comment/page.tsx              # Comment editor mode
+│   ├── content/page.tsx              # Content/blog editor mode
+│   ├── docs/page.tsx                 # Documentation editor mode
+│   ├── layout.tsx                    # Root layout + providers
+│   └── globals.css                   # Tailwind v4 + CSS variables
 ├── components/
-│   ├── bubbleMenu/
-│   │   ├── BaseBubbleMenu.tsx
-│   │   ├── ImageBubbleMenu.tsx
-│   │   ├── TableBubbleMenu.tsx
-│   │   ├── TextBubbleMenu.tsx
-│   │   └── YoutubeBubbleMenu.tsx
-│   ├── extensions/
-│   │   ├── FontFamily.ts
-│   │   ├── FontSize.ts
-│   │   ├── ImageResizable.tsx
-│   │   └── MarkDownLink.ts
-│   ├── models/
-│   │   ├── image.tsx
-│   │   ├── ImportExport.tsx
-│   │   ├── link.tsx
-│   │   └── youtube.tsx
-│   ├── ui/
-│   │   ├── button.tsx
-│   │   ├── command.tsx
-│   │   ├── dialog.tsx
-│   │   ├── hover-card.tsx
-│   │   ├── input.tsx
-│   │   ├── native-select.tsx
-│   │   ├── popover.tsx
-│   │   ├── select.tsx
-│   │   └── tabs.tsx
-│   ├── EditorButton.tsx
-│   ├── EditorMenuBar.tsx
-│   ├── EditorPage.tsx
-│   ├── MenuButton.tsx
-│   └── MenuSelect.tsx
+│   ├── editor/                       # Core editor components
+│   ├── toolbar/                      # Toolbar system + registry
+│   ├── bubble-menus/                 # Bubble menus + registry
+│   ├── dialogs/                      # Modal dialogs
+│   ├── commands/                     # Command layer + registry
+│   ├── showcase/                     # Showcase UI components
+│   ├── ui/                           # shadcn/ui components
+│   ├── LiveEditorDemo.tsx            # Landing page demo
+│   └── ThemeToggle.tsx               # Dark/light toggle
 ├── constants/
-│   ├── EditorExtension.tsx
-│   ├── EditorMenuOptions.ts
-│   └── EditorStateOptions.tsx
+│   ├── tiptap-feature-registry.ts    # Feature registry (SSOT)
+│   ├── EditorMenuOptions.ts          # Toolbar definitions
+│   └── EditorStateOptions.ts         # Type definitions
 ├── context/
-│   └── EditorContext.tsx
+│   └── EditorContext.tsx             # Global editor state
+├── editor/
+│   ├── core/                         # Editor factory + config
+│   ├── extensions/                   # Feature-based extensions
+│   ├── commands/                     # Command layer
+│   ├── state/                        # State management
+│   ├── serializers/                  # HTML/JSON/Markdown
+│   └── types/                        # Type definitions
+├── features/                         # Feature-centric implementations
+├── examples/                         # Minimal integration examples
+├── docs/                             # Documentation
+├── tests/                            # Test suite
 ├── lib/
-│   └── utils.ts
-├── public/
-│   ├── ContentImage.png
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
-├── .editorconfig
-├── .eslintrc.json
-├── .gitignore
-├── .prettierrc
-├── AGENTS.md
+│   └── utils.ts                      # cn() utility
+├── public/                           # Static assets
+├── .workspace/                       # Project workspace docs
+├── PROJECT_REFERENCE_INDEX.md        # PRI (AI reference)
+├── AGENTS.md                         # AI agent instructions
 ├── CHANGELOG.md
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── next.config.ts
 ├── package.json
-├── postcss.config.mjs
-├── README.md
-├── SECURITY.md
-├── tsconfig.json
-└── vercel.json
+└── ...
 ```
 
 ---
@@ -119,24 +94,27 @@ Simple-Tiptap-editor/
 | File | Purpose |
 |------|---------|
 | `app/layout.tsx` | Root layout with providers |
-| `app/page.tsx` | Main landing page |
-| `components/EditorPage.tsx` | Main editor component |
-| `components/EditorMenuBar.tsx` | Dynamic toolbar |
+| `app/page.tsx` | Landing page with live demo |
+| `app/demo/page.tsx` | Full playground |
+| `components/editor/EditorCore.tsx` | Minimal editor wrapper |
+| `components/toolbar/Toolbar.tsx` | Dynamic toolbar |
+| `components/bubble-menus/BubbleMenuRegistry.tsx` | Bubble menu registry |
 | `context/EditorContext.tsx` | Global editor state management |
-| `constants/EditorExtension.tsx` | TipTap extension configurations |
+| `constants/tiptap-feature-registry.ts` | Feature registry (SSOT) |
 | `constants/EditorMenuOptions.ts` | Toolbar button definitions |
+| `editor/core/extensions.ts` | Extension composition factory |
 | `lib/utils.ts` | Utility functions (cn) |
 
 ---
 
 ## Editor Modes
 
-| Mode | Description | Extensions |
-|------|-------------|------------|
-| `comment` | Minimal editor for comments | `COMMENT_EXTENSIONS` |
-| `document` | Full-page editor for documents | `DOCUMENT_EXTENSIONS` |
-| `content` | Blog/post-style rich editor | `BLOG_EXTENSIONS` |
-| `default` | Basic TipTap setup | `DEFAULT_EXTENSIONS` |
+| Mode | Route | Description | Extension Set |
+|------|-------|-------------|---------------|
+| `comment` | `/comment` | Minimal editor for comments | `COMMENT_EXTENSIONS` |
+| `document` | `/docs` | Full-page editor for documents | `DOCUMENT_EXTENSIONS` |
+| `content` | `/content` | Blog/post-style rich editor | `BLOG_EXTENSIONS` |
+| `default` | `/` | Basic TipTap setup | `DEFAULT_EXTENSIONS` |
 
 ---
 
@@ -147,6 +125,7 @@ npm run dev      # Start development server
 npm run build    # Build for production
 npm run start    # Start production server
 npm run lint     # Run ESLint
+npm run typecheck # TypeScript strict check
 ```
 
 ---
@@ -167,7 +146,7 @@ npm run build
 npm run lint
 
 # Type checking
-npx tsc --noEmit
+npm run typecheck
 ```
 
 ---
@@ -183,7 +162,7 @@ npx tsc --noEmit
 ## Deployment
 
 **Platform:** Vercel
-**URL:** https://simple-tiptap-editor.vercel.app
+**URL:** https://tiptap-editor.vercel.app
 **Branch:** main (auto-deploy on push)
 
 ---
@@ -191,16 +170,16 @@ npx tsc --noEmit
 ## Git Configuration
 
 - **Default Branch:** main
-- **Remote:** origin (https://github.com/coderooz/Simple-Tiptap-editor)
+- **Remote:** origin (https://github.com/coderooz/TipTap-Editor)
 - **Commit Convention:** Conventional Commits
 
 ---
 
 ## Code Quality Tools
 
-- **ESLint:** Configured with Next.js recommended rules
+- **ESLint:** Flat config with React, TypeScript, Tailwind rules
 - **TypeScript:** Strict mode enabled
-- **Prettier:** Configured for consistent formatting
+- **Prettier:** Configured with Tailwind plugin
 - **Husky:** Git hooks for pre-commit checks
 - **lint-staged:** Run linters on staged files
 
@@ -208,33 +187,38 @@ npx tsc --noEmit
 
 ## Testing
 
-No test framework currently configured. Recommended: Vitest + Playwright.
+Test framework: Vitest + Playwright (in progress)
+- Unit tests for extensions and utilities
+- Integration tests for editor behavior
+- E2E tests for critical user flows
+- Accessibility tests with axe-core
 
 ---
 
 ## Known Issues / Technical Debt
 
-1. No automated test suite
-2. No CI/CD pipeline configured
-3. No dependency update automation (Dependabot)
-4. EditorContext has commented-out bubble menu components
-5. No error boundary implementation
-6. No analytics/tracking configured
+1. Test suite in progress (Vitest + Playwright setup)
+2. CI/CD pipeline with GitHub Actions (planned)
+3. Dependabot configuration (planned)
+4. Error boundary implementation (planned)
+5. Analytics/tracking integration (planned)
+6. Collaborative editing (Yjs) - dependencies installed, demo planned
 
 ---
 
 ## Future Enhancements
 
-- [ ] Add comprehensive test suite
-- [ ] Implement CI/CD with GitHub Actions
-- [ ] Add Dependabot for dependency updates
-- [ ] Add error boundaries
-- [ ] Add analytics integration
-- [ ] Add collaborative editing (Yjs)
-- [ ] Add more editor modes
-- [ ] Improve accessibility (WCAG compliance)
-- [ ] Add dark mode support
-- [ ] Add keyboard shortcuts documentation
+- [ ] Complete test suite (Vitest + Playwright)
+- [ ] CI/CD pipeline with GitHub Actions
+- [ ] Dependabot for dependency updates
+- [ ] Error boundaries
+- [ ] Analytics integration
+- [ ] Collaborative editing (Yjs) demo
+- [ ] More editor modes
+- [ ] Accessibility audit (WCAG 2.1 AA)
+- [ ] Dark mode support
+- [ ] Keyboard shortcuts documentation
+- [ ] Command palette (cmdk integration)
 
 ---
 

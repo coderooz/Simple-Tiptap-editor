@@ -11,14 +11,21 @@ import type { EditorType } from "@/context/EditorContext";
 
 interface EditorTypeProps {
   type: EditorType;
+  initialContent?: string;
 }
 
-export default function EditorPage({ type }: EditorTypeProps) {
-  const { editor, setEditorType, charCount } = useEditorContext();
+export default function EditorPage({ type, initialContent }: EditorTypeProps) {
+  const { editor, setEditorType, charCount, setEditorContent } = useEditorContext();
 
   useEffect(() => {
     setEditorType(type);
   }, [type, setEditorType]);
+
+  useEffect(() => {
+    if (editor && initialContent) {
+      setEditorContent(initialContent);
+    }
+  }, [editor, initialContent, setEditorContent]);
 
   if (!editor)
     return (
